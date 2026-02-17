@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../l10n/app_localizations.dart';
 import '../services/spoonacular_service.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
@@ -19,7 +18,6 @@ class RecipeDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: Text(recipe.title),
@@ -54,13 +52,13 @@ class RecipeDetailScreen extends StatelessWidget {
                     if (recipe.readyInMinutes != null) ...[
                       const Icon(Icons.timer, size: 18, color: Colors.grey),
                       const SizedBox(width: 4),
-                      Text(l10n.minutesShort(recipe.readyInMinutes!)),
+                      Text('${recipe.readyInMinutes} min'),
                       const SizedBox(width: 16),
                     ],
                     if (recipe.servings != null) ...[
                       const Icon(Icons.people, size: 18, color: Colors.grey),
                       const SizedBox(width: 4),
-                      Text(l10n.servingsCount(recipe.servings!)),
+                      Text('${recipe.servings} servings'),
                     ],
                   ],
                 ),
@@ -78,7 +76,7 @@ class RecipeDetailScreen extends StatelessWidget {
                 if (recipe.ingredients.isNotEmpty) ...[
                   const SizedBox(height: 24),
                   Text(
-                    l10n.ingredients,
+                    'Ingredients',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -100,7 +98,7 @@ class RecipeDetailScreen extends StatelessWidget {
                 if (recipe.steps.isNotEmpty) ...[
                   const SizedBox(height: 24),
                   Text(
-                    l10n.instructions,
+                    'Instructions',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

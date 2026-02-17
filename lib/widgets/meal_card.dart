@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../l10n/app_localizations.dart';
 import '../models/meal_plan.dart';
 
 class MealCard extends StatelessWidget {
@@ -12,18 +11,18 @@ class MealCard extends StatelessWidget {
     this.onFindRecipe,
   });
 
-  String _getMealTypeLabel(AppLocalizations l10n, String type) {
+  String _getMealTypeLabel(String type) {
     switch (type.toLowerCase()) {
       case 'breakfast':
-        return l10n.mealBreakfast;
+        return 'Breakfast';
       case 'lunch':
-        return l10n.mealLunch;
+        return 'Lunch';
       case 'dinner':
-        return l10n.mealDinner;
+        return 'Dinner';
       case 'snack':
-        return l10n.mealSnack;
+        return 'Snack';
       case 'second_breakfast':
-        return l10n.mealSecondBreakfast;
+        return 'Second Breakfast';
       default:
         return type;
     }
@@ -46,7 +45,6 @@ class MealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Padding(
@@ -59,7 +57,7 @@ class MealCard extends StatelessWidget {
                 Icon(_getMealIcon(meal.type), size: 24, color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
-                  _getMealTypeLabel(l10n, meal.type),
+                  _getMealTypeLabel(meal.type),
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
@@ -67,7 +65,7 @@ class MealCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '${meal.calories.round()} ${l10n.kcalUnit}',
+                  '${meal.calories.round()} kcal',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -93,11 +91,11 @@ class MealCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                _NutrientChip(label: l10n.nutrientProteinShort, value: meal.protein, color: Colors.red[400]!),
+                _NutrientChip(label: 'P', value: meal.protein, color: Colors.red[400]!),
                 const SizedBox(width: 8),
-                _NutrientChip(label: l10n.nutrientFatShort, value: meal.fat, color: Colors.orange[400]!),
+                _NutrientChip(label: 'F', value: meal.fat, color: Colors.orange[400]!),
                 const SizedBox(width: 8),
-                _NutrientChip(label: l10n.nutrientCarbsShort, value: meal.carbs, color: Colors.blue[400]!),
+                _NutrientChip(label: 'C', value: meal.carbs, color: Colors.blue[400]!),
               ],
             ),
             if (meal.ingredients.isNotEmpty) ...[
@@ -122,7 +120,7 @@ class MealCard extends StatelessWidget {
                 child: TextButton.icon(
                   onPressed: onFindRecipe,
                   icon: const Icon(Icons.search, size: 18),
-                  label: Text(l10n.findRecipe),
+                  label: const Text('Find Recipe'),
                 ),
               ),
             ],
@@ -146,7 +144,6 @@ class _NutrientChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -154,7 +151,7 @@ class _NutrientChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        '$label: ${value.round()}${l10n.gramUnit}',
+        '$label: ${value.round()}g',
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
