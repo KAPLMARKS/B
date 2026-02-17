@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/analytics_service.dart';
 import '../services/spoonacular_service.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
@@ -18,6 +19,8 @@ class RecipeDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AnalyticsService().logViewRecipe(recipeTitle: recipe.title);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(recipe.title),

@@ -207,22 +207,6 @@ class SpoonacularService {
     }
   }
 
-  Future<bool> validateApiKey() async {
-    try {
-      final uri = Uri.parse('$_baseUrl/recipes/complexSearch').replace(
-        queryParameters: {
-          'apiKey': apiKey,
-          'query': 'test',
-          'number': '1',
-        },
-      );
-
-      final response = await http.get(uri).timeout(const Duration(seconds: 10));
-      return response.statusCode == 200;
-    } catch (_) {
-      return false;
-    }
-  }
 }
 
 class SpoonacularException implements Exception {

@@ -65,20 +65,4 @@ class UserProfile {
     }
   }
 
-  String get activityDisplayName {
-    switch (activityLevel) {
-      case 'sedentary':
-        return 'Sedentary';
-      case 'light':
-        return 'Light Activity';
-      case 'moderate':
-        return 'Moderate';
-      case 'active':
-        return 'Active';
-      case 'very_active':
-        return 'Very Active';
-      default:
-        return activityLevel;
-    }
-  }
 }

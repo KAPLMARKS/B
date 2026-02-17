@@ -202,30 +202,6 @@ Rules:
     }
   }
 
-  Future<bool> validateApiKey() async {
-    try {
-      final response = await http
-          .post(
-            Uri.parse(_baseUrl),
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $apiKey',
-            },
-            body: jsonEncode({
-              'model': _model,
-              'messages': [
-                {'role': 'user', 'content': 'Hi'},
-              ],
-              'max_tokens': 5,
-            }),
-          )
-          .timeout(const Duration(seconds: 10));
-
-      return response.statusCode == 200;
-    } catch (_) {
-      return false;
-    }
-  }
 }
 
 class GroqException implements Exception {

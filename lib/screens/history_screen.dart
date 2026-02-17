@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/meal_plan.dart';
 import '../models/user_profile.dart';
+import '../services/analytics_service.dart';
 import '../services/storage_service.dart';
 import 'meal_plan_screen.dart';
 
@@ -55,6 +56,7 @@ class HistoryScreenState extends State<HistoryScreen> {
 
     if (confirm == true) {
       await _storageService.deleteMealPlan(plan.id);
+      AnalyticsService().logDeletePlan(planName: plan.planName);
       loadPlans();
     }
   }

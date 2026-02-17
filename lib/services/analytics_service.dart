@@ -77,12 +77,6 @@ class AnalyticsService {
     _appsFlyerLog(event, params);
   }
 
-  /// Log screen view across all providers.
-  Future<void> logScreenView(String screenName) async {
-    await _firebase.logScreenView(screenName: screenName);
-    _appMetricaLog('screen_view', {'screen': screenName});
-  }
-
   // --- Private helpers ---
 
   Future<void> _firebaseLog(String event, Map<String, Object> params) async {

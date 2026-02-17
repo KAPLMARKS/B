@@ -21,19 +21,9 @@ class StorageService {
     return prefs.getString(_groqApiKeyKey) ?? ApiKeys.groqApiKey;
   }
 
-  Future<void> saveGroqApiKey(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_groqApiKeyKey, key);
-  }
-
   Future<String?> getSpoonacularApiKey() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_spoonacularApiKeyKey) ?? ApiKeys.spoonacularApiKey;
-  }
-
-  Future<void> saveSpoonacularApiKey(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_spoonacularApiKeyKey, key);
   }
 
   // --- User Profile ---
@@ -88,10 +78,5 @@ class StorageService {
     final prefs = await SharedPreferences.getInstance();
     final jsonStr = jsonEncode(plans.map((p) => p.toJson()).toList());
     await prefs.setString(_mealPlansKey, jsonStr);
-  }
-
-  Future<void> clearAllData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
   }
 }

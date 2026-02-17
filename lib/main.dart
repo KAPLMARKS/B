@@ -3,9 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'firebase_options.dart';
 import 'config/sdk_keys.dart';
 import 'services/analytics_service.dart';
 import 'services/logger_service.dart';
+import 'screens/ad_welcome_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/history_screen.dart';
 
@@ -13,7 +15,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Firebase
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   AppLogger.info('Firebase initialized', source: 'Init');
 
   // AppMetrica
@@ -56,7 +60,7 @@ class MealPlannerApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.light,
       ),
-      home: const MainNavigation(),
+      home: const AdWelcomeScreen(nextScreen: MainNavigation()),
     );
   }
 }
