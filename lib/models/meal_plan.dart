@@ -40,7 +40,6 @@ class NutritionInfo {
 class Meal {
   final String type;
   final String name;
-  final String searchName;
   final String description;
   final double calories;
   final double protein;
@@ -51,7 +50,6 @@ class Meal {
   const Meal({
     required this.type,
     required this.name,
-    required this.searchName,
     required this.description,
     required this.calories,
     required this.protein,
@@ -71,7 +69,6 @@ class Meal {
     return Meal(
       type: json['type'] as String? ?? 'meal',
       name: json['name'] as String? ?? 'Unknown',
-      searchName: json['search_name'] as String? ?? json['name'] as String? ?? 'meal',
       description: json['description'] as String? ?? '',
       calories: (json['calories'] as num?)?.toDouble() ?? 0,
       protein: (json['protein'] as num?)?.toDouble() ?? 0,
@@ -87,7 +84,6 @@ class Meal {
   Map<String, dynamic> toJson() => {
         'type': type,
         'name': name,
-        'search_name': searchName,
         'description': description,
         'calories': calories,
         'protein': protein,

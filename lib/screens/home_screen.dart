@@ -70,24 +70,13 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final groqKey = await _storageService.getGroqApiKey();
-    if (groqKey == null || groqKey.isEmpty) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter your Groq API key in Settings first'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
     final profile = _buildProfile();
     await _storageService.saveUserProfile(profile);
 
     setState(() => _isLoading = true);
 
     try {
-      final groqService = GroqService(apiKey: groqKey);
+      final groqService = GroqService(apiKey: groqKey!);
       final plan = await groqService.generateMealPlan(profile);
 
       if (!mounted) return;

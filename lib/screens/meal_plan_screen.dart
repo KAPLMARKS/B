@@ -37,12 +37,11 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
 
   Future<void> _regeneratePlan() async {
     final groqKey = await _storageService.getGroqApiKey();
-    if (groqKey == null || groqKey.isEmpty) return;
 
     setState(() => _isRegenerating = true);
 
     try {
-      final groqService = GroqService(apiKey: groqKey);
+      final groqService = GroqService(apiKey: groqKey!);
       final newPlan = await groqService.generateMealPlan(widget.userProfile);
       if (mounted) {
         setState(() {
@@ -80,16 +79,6 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
 
   Future<void> _findRecipe(Meal meal) async {
     final spoonacularKey = await _storageService.getSpoonacularApiKey();
-    if (spoonacularKey == null || spoonacularKey.isEmpty) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Spoonacular API key is not configured'),
-          backgroundColor: Colors.orange,
-        ),
-      );
-      return;
-    }
 
     if (!mounted) return;
     showDialog(
@@ -99,8 +88,8 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
     );
 
     try {
-      final service = SpoonacularService(apiKey: spoonacularKey);
-      final recipes = await service.searchRecipes(meal.searchName, number: 5);
+      final service = SpoonacularService(apiKey: spoonacularKey!);
+      final recipes = await service.searchRecipes(meal.name, number: 5);
 
       if (!mounted) return;
       Navigator.pop(context);

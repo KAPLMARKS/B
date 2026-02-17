@@ -60,8 +60,7 @@ You MUST respond with ONLY a valid JSON object (no markdown, no extra text) in t
   "meals": [
     {
       "type": "breakfast/lunch/dinner/snack",
-      "name": "meal name in Russian",
-      "search_name": "meal name in English for recipe search",
+      "name": "meal name",
       "description": "brief description of the meal",
       "calories": <number>,
       "protein": <grams as number>,
@@ -77,7 +76,7 @@ Rules:
 - Calories should match the user's goal
 - All nutritional values must be realistic
 - Include 3-8 ingredients per meal
-- All text fields (name, description, ingredients, search_name) should be in English
+- All text fields should be in English
 - Return ONLY the JSON, no other text''';
   }
 
