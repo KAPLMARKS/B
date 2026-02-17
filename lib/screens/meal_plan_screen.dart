@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/meal_plan.dart';
 import '../models/user_profile.dart';
 import '../services/groq_service.dart';
@@ -56,8 +57,12 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
       );
     } catch (e) {
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text(l10n.errorGeneric(e.toString())),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       if (mounted) setState(() => _isRegenerating = false);
@@ -67,10 +72,11 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
   Future<void> _savePlan() async {
     await _storageService.saveMealPlan(_currentPlan);
     if (mounted) {
+      final l10n = AppLocalizations.of(context)!;
       setState(() => _isSaved = true);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Plan saved'),
+        SnackBar(
+          content: Text(l10n.planSaved),
           backgroundColor: Colors.green,
         ),
       );
@@ -94,9 +100,11 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
       if (!mounted) return;
       Navigator.pop(context);
 
+      final l10n = AppLocalizations.of(context)!;
+
       if (recipes.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No recipes found')),
+          SnackBar(content: Text(l10n.noRecipesFound)),
         );
         return;
       }
@@ -104,7 +112,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
       final selected = await showDialog<SpoonacularRecipe>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Choose a recipe'),
+          title: Text(l10n.chooseRecipe),
           content: SizedBox(
             width: double.maxFinite,
             child: ListView.builder(
@@ -128,7 +136,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                       : const Icon(Icons.restaurant, size: 56),
                   title: Text(recipe.title),
                   subtitle: recipe.readyInMinutes != null
-                      ? Text('${recipe.readyInMinutes} min')
+                      ? Text(l10n.minutesShort(recipe.readyInMinutes!))
                       : null,
                   onTap: () => Navigator.pop(ctx, recipe),
                 );
@@ -138,7 +146,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
           ],
         ),
@@ -166,7 +174,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Failed to load recipe: $e'),
+              content: Text(l10n.failedToLoadRecipe(e.toString())),
               backgroundColor: Colors.red,
             ),
           );
@@ -181,18 +189,37 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
     } catch (e) {
       if (!mounted) return;
       Navigator.pop(context);
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text(l10n.errorGeneric(e.toString())),
+          backgroundColor: Colors.red,
+        ),
       );
+    }
+  }
+
+  String _localizedGoalLabel(AppLocalizations l10n, String goal) {
+    switch (goal) {
+      case 'weight_loss':
+        return l10n.goalWeightLoss;
+      case 'muscle_gain':
+        return l10n.goalMuscleGain;
+      case 'health':
+        return l10n.goalHealth;
+      default:
+        return goal;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_isRegenerating) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Generating...')),
-        body: const LoadingIndicator(message: 'Regenerating plan...'),
+        appBar: AppBar(title: Text(l10n.generating)),
+        body: LoadingIndicator(message: l10n.regeneratingPlan),
       );
     }
 
@@ -203,12 +230,12 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
           IconButton(
             icon: Icon(_isSaved ? Icons.bookmark : Icons.bookmark_border),
             onPressed: _savePlan,
-            tooltip: 'Save plan',
+            tooltip: l10n.savePlanTooltip,
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _regeneratePlan,
-            tooltip: 'Regenerate',
+            tooltip: l10n.regenerateTooltip,
           ),
         ],
       ),
@@ -217,7 +244,9 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Text(
-              'Goal: ${widget.userProfile.goalDisplayName}',
+              l10n.goalWithValue(
+                _localizedGoalLabel(l10n, widget.userProfile.goal),
+              ),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.grey[600],
                   ),
@@ -240,7 +269,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                   child: OutlinedButton.icon(
                     onPressed: _regeneratePlan,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('New Plan'),
+                    label: Text(l10n.newPlan),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -248,7 +277,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                   child: FilledButton.icon(
                     onPressed: _isSaved ? null : _savePlan,
                     icon: const Icon(Icons.save),
-                    label: Text(_isSaved ? 'Saved' : 'Save'),
+                    label: Text(_isSaved ? l10n.saved : l10n.save),
                   ),
                 ),
               ],

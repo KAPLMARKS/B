@@ -1,0 +1,148 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "AI Meal Planner",
+
+  "navPlanner": "Planner",
+  "navHistory": "History",
+
+  "goalSectionTitle": "Goal",
+  "goalWeightLoss": "Weight Loss",
+  "goalMuscle": "Muscle",
+  "goalMuscleGain": "Muscle Gain",
+  "goalHealth": "Health",
+
+  "genderSectionTitle": "Gender",
+  "genderMale": "Male",
+  "genderFemale": "Female",
+
+  "ageLabel": "Age",
+  "ageSuffix": "yrs",
+  "weightLabel": "Weight",
+  "weightSuffix": "kg",
+  "heightLabel": "Height",
+  "heightSuffix": "cm",
+  "invalidField": "Invalid",
+
+  "activityLevelTitle": "Activity Level",
+  "activitySedentary": "Sedentary (little/no exercise)",
+  "activityLight": "Light activity (1-3 days/week)",
+  "activityModerate": "Moderate (3-5 days/week)",
+  "activityActive": "Active (6-7 days/week)",
+  "activityVeryActive": "Very active (daily)",
+
+  "dietaryRestrictionsTitle": "Dietary Restrictions",
+  "dietVegetarian": "Vegetarian",
+  "dietVegan": "Vegan",
+  "dietGlutenFree": "Gluten-Free",
+  "dietLactoseFree": "Lactose-Free",
+  "dietKeto": "Keto",
+  "dietHalal": "Halal",
+
+  "allergiesLabel": "Allergies",
+  "allergiesHint": "nuts, seafood...",
+
+  "mealsPerDay": "Meals per day: {count}",
+  "@mealsPerDay": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "generateMealPlan": "Generate Meal Plan",
+
+  "errorGeneric": "Error: {message}",
+  "@errorGeneric": {
+    "placeholders": {
+      "message": { "type": "String" }
+    }
+  },
+
+  "generating": "Generating...",
+  "regeneratingPlan": "Regenerating plan...",
+  "planSaved": "Plan saved",
+  "noRecipesFound": "No recipes found",
+  "chooseRecipe": "Choose a recipe",
+  "cancel": "Cancel",
+
+  "minutesShort": "{minutes} min",
+  "@minutesShort": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+
+  "failedToLoadRecipe": "Failed to load recipe: {error}",
+  "@failedToLoadRecipe": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "goalWithValue": "Goal: {goal}",
+  "@goalWithValue": {
+    "placeholders": {
+      "goal": { "type": "String" }
+    }
+  },
+
+  "savePlanTooltip": "Save plan",
+  "regenerateTooltip": "Regenerate",
+  "newPlan": "New Plan",
+  "saved": "Saved",
+  "save": "Save",
+
+  "savedPlans": "Saved Plans",
+  "noSavedPlansYet": "No saved plans yet",
+  "createPlanHint": "Create a plan on the main screen",
+  "deletePlanTitle": "Delete plan?",
+
+  "deletePlanConfirm": "Delete \"{name}\"?",
+  "@deletePlanConfirm": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "delete": "Delete",
+
+  "mealsCount": "{count} meals",
+  "@mealsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "ingredients": "Ingredients",
+  "instructions": "Instructions",
+
+  "servingsCount": "{count} servings",
+  "@servingsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "mealBreakfast": "Breakfast",
+  "mealLunch": "Lunch",
+  "mealDinner": "Dinner",
+  "mealSnack": "Snack",
+  "mealSecondBreakfast": "Second Breakfast",
+
+  "kcalUnit": "kcal",
+  "gramUnit": "g",
+  "findRecipe": "Find Recipe",
+
+  "nutrientProteinShort": "P",
+  "nutrientFatShort": "F",
+  "nutrientCarbsShort": "C",
+
+  "dailyTotal": "Daily Total",
+  "caloriesLabel": "Calories",
+  "proteinLabel": "Protein",
+  "fatLabel": "Fat",
+  "carbsLabel": "Carbs",
+
+  "aiGenerating": "AI is generating your meal plan...",
+  "mayTakeFewSeconds": "This may take a few seconds"
+}

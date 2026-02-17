@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'l10n/app_localizations.dart';
 import 'screens/home_screen.dart';
 import 'screens/history_screen.dart';
 
@@ -15,6 +16,8 @@ class MealPlannerApp extends StatelessWidget {
     return MaterialApp(
       title: 'AI Meal Planner',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         colorSchemeSeed: Colors.green,
         useMaterial3: true,
@@ -43,6 +46,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
@@ -56,16 +60,16 @@ class _MainNavigationState extends State<MainNavigation> {
             _historyKey.currentState?.loadPlans();
           }
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.restaurant_menu),
-            selectedIcon: Icon(Icons.restaurant_menu),
-            label: 'Planner',
+            icon: const Icon(Icons.restaurant_menu),
+            selectedIcon: const Icon(Icons.restaurant_menu),
+            label: l10n.navPlanner,
           ),
           NavigationDestination(
-            icon: Icon(Icons.history),
-            selectedIcon: Icon(Icons.history),
-            label: 'History',
+            icon: const Icon(Icons.history),
+            selectedIcon: const Icon(Icons.history),
+            label: l10n.navHistory,
           ),
         ],
       ),

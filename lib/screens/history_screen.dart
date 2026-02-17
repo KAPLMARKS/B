@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../l10n/app_localizations.dart';
 import '../models/meal_plan.dart';
 import '../models/user_profile.dart';
 import '../services/storage_service.dart';
@@ -34,20 +35,34 @@ class HistoryScreenState extends State<HistoryScreen> {
     }
   }
 
+  String _localizedGoalLabel(AppLocalizations l10n, String goal) {
+    switch (goal) {
+      case 'weight_loss':
+        return l10n.goalWeightLoss;
+      case 'muscle_gain':
+        return l10n.goalMuscleGain;
+      case 'health':
+        return l10n.goalHealth;
+      default:
+        return goal;
+    }
+  }
+
   Future<void> _deletePlan(MealPlan plan) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete plan?'),
-        content: Text('Delete "${plan.planName}"?'),
+        title: Text(l10n.deletePlanTitle),
+        content: Text(l10n.deletePlanConfirm(plan.planName)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -61,9 +76,10 @@ class HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Saved Plans'),
+        title: Text(l10n.savedPlans),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -75,14 +91,14 @@ class HistoryScreenState extends State<HistoryScreen> {
                       Icon(Icons.history, size: 64, color: Colors.grey[400]),
                       const SizedBox(height: 16),
                       Text(
-                        'No saved plans yet',
+                        l10n.noSavedPlansYet,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               color: Colors.grey[600],
                             ),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Create a plan on the main screen',
+                        l10n.createPlanHint,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Colors.grey[500],
                             ),
@@ -112,17 +128,17 @@ class HistoryScreenState extends State<HistoryScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 4),
-                              Text('$dateStr  |  ${UserProfile.goalLabel(plan.goal)}'),
+                              Text('$dateStr  |  ${_localizedGoalLabel(l10n, plan.goal)}'),
                               const SizedBox(height: 4),
                               Text(
-                                '${nutrition.calories.round()} kcal  |  P:${nutrition.protein.round()}g  F:${nutrition.fat.round()}g  C:${nutrition.carbs.round()}g',
+                                '${nutrition.calories.round()} ${l10n.kcalUnit}  |  ${l10n.nutrientProteinShort}:${nutrition.protein.round()}${l10n.gramUnit}  ${l10n.nutrientFatShort}:${nutrition.fat.round()}${l10n.gramUnit}  ${l10n.nutrientCarbsShort}:${nutrition.carbs.round()}${l10n.gramUnit}',
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                   fontSize: 12,
                                 ),
                               ),
                               Text(
-                                '${plan.meals.length} meals',
+                                l10n.mealsCount(plan.meals.length),
                                 style: TextStyle(
                                   color: Colors.grey[500],
                                   fontSize: 12,

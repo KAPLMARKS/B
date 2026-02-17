@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/user_profile.dart';
 import '../services/groq_service.dart';
 import '../services/storage_service.dart';
@@ -69,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _generatePlan() async {
     if (!_formKey.currentState!.validate()) return;
 
+    final l10n = AppLocalizations.of(context)!;
     final groqKey = await _storageService.getGroqApiKey();
     final profile = _buildProfile();
     await _storageService.saveUserProfile(profile);
@@ -94,7 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text(l10n.errorGeneric(e.toString())),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -112,6 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_isLoading) {
       return const Scaffold(
         body: LoadingIndicator(),
@@ -120,32 +127,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AI Meal Planner'),
+        title: Text(l10n.appTitle),
       ),
       body: Form(
         key: _formKey,
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text('Goal', style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.goalSectionTitle, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             SegmentedButton<String>(
-              segments: const [
-                ButtonSegment(value: 'weight_loss', label: Text('Weight Loss'), icon: Icon(Icons.trending_down)),
-                ButtonSegment(value: 'muscle_gain', label: Text('Muscle'), icon: Icon(Icons.fitness_center)),
-                ButtonSegment(value: 'health', label: Text('Health'), icon: Icon(Icons.favorite)),
+              segments: [
+                ButtonSegment(value: 'weight_loss', label: Text(l10n.goalWeightLoss), icon: const Icon(Icons.trending_down)),
+                ButtonSegment(value: 'muscle_gain', label: Text(l10n.goalMuscle), icon: const Icon(Icons.fitness_center)),
+                ButtonSegment(value: 'health', label: Text(l10n.goalHealth), icon: const Icon(Icons.favorite)),
               ],
               selected: {_goal},
               onSelectionChanged: (val) => setState(() => _goal = val.first),
             ),
 
             const SizedBox(height: 20),
-            Text('Gender', style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.genderSectionTitle, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             SegmentedButton<String>(
-              segments: const [
-                ButtonSegment(value: 'male', label: Text('Male'), icon: Icon(Icons.male)),
-                ButtonSegment(value: 'female', label: Text('Female'), icon: Icon(Icons.female)),
+              segments: [
+                ButtonSegment(value: 'male', label: Text(l10n.genderMale), icon: const Icon(Icons.male)),
+                ButtonSegment(value: 'female', label: Text(l10n.genderFemale), icon: const Icon(Icons.female)),
               ],
               selected: {_gender},
               onSelectionChanged: (val) => setState(() => _gender = val.first),
@@ -158,43 +165,43 @@ class _HomeScreenState extends State<HomeScreen> {
                 final fields = [
                   TextFormField(
                     controller: _ageController,
-                    decoration: const InputDecoration(
-                      labelText: 'Age',
-                      suffixText: 'yrs',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: l10n.ageLabel,
+                      suffixText: l10n.ageSuffix,
+                      border: const OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
                     validator: (v) {
                       final age = int.tryParse(v ?? '');
-                      if (age == null || age < 10 || age > 120) return 'Invalid';
+                      if (age == null || age < 10 || age > 120) return l10n.invalidField;
                       return null;
                     },
                   ),
                   TextFormField(
                     controller: _weightController,
-                    decoration: const InputDecoration(
-                      labelText: 'Weight',
-                      suffixText: 'kg',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: l10n.weightLabel,
+                      suffixText: l10n.weightSuffix,
+                      border: const OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
                     validator: (v) {
                       final w = double.tryParse(v ?? '');
-                      if (w == null || w < 20 || w > 300) return 'Invalid';
+                      if (w == null || w < 20 || w > 300) return l10n.invalidField;
                       return null;
                     },
                   ),
                   TextFormField(
                     controller: _heightController,
-                    decoration: const InputDecoration(
-                      labelText: 'Height',
-                      suffixText: 'cm',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: l10n.heightLabel,
+                      suffixText: l10n.heightSuffix,
+                      border: const OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
                     validator: (v) {
                       final h = double.tryParse(v ?? '');
-                      if (h == null || h < 100 || h > 250) return 'Invalid';
+                      if (h == null || h < 100 || h > 250) return l10n.invalidField;
                       return null;
                     },
                   ),
@@ -221,51 +228,51 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             const SizedBox(height: 20),
-            Text('Activity Level', style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.activityLevelTitle, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
               initialValue: _activityLevel,
               decoration: const InputDecoration(border: OutlineInputBorder()),
-              items: const [
-                DropdownMenuItem(value: 'sedentary', child: Text('Sedentary (little/no exercise)')),
-                DropdownMenuItem(value: 'light', child: Text('Light activity (1-3 days/week)')),
-                DropdownMenuItem(value: 'moderate', child: Text('Moderate (3-5 days/week)')),
-                DropdownMenuItem(value: 'active', child: Text('Active (6-7 days/week)')),
-                DropdownMenuItem(value: 'very_active', child: Text('Very active (daily)')),
+              items: [
+                DropdownMenuItem(value: 'sedentary', child: Text(l10n.activitySedentary)),
+                DropdownMenuItem(value: 'light', child: Text(l10n.activityLight)),
+                DropdownMenuItem(value: 'moderate', child: Text(l10n.activityModerate)),
+                DropdownMenuItem(value: 'active', child: Text(l10n.activityActive)),
+                DropdownMenuItem(value: 'very_active', child: Text(l10n.activityVeryActive)),
               ],
               onChanged: (v) => setState(() => _activityLevel = v!),
             ),
 
             const SizedBox(height: 20),
-            Text('Dietary Restrictions', style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.dietaryRestrictionsTitle, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
               runSpacing: 4,
               children: [
-                _buildRestrictionChip('vegetarian', 'Vegetarian'),
-                _buildRestrictionChip('vegan', 'Vegan'),
-                _buildRestrictionChip('gluten_free', 'Gluten-Free'),
-                _buildRestrictionChip('lactose_free', 'Lactose-Free'),
-                _buildRestrictionChip('keto', 'Keto'),
-                _buildRestrictionChip('halal', 'Halal'),
+                _buildRestrictionChip('vegetarian', l10n.dietVegetarian),
+                _buildRestrictionChip('vegan', l10n.dietVegan),
+                _buildRestrictionChip('gluten_free', l10n.dietGlutenFree),
+                _buildRestrictionChip('lactose_free', l10n.dietLactoseFree),
+                _buildRestrictionChip('keto', l10n.dietKeto),
+                _buildRestrictionChip('halal', l10n.dietHalal),
               ],
             ),
 
             const SizedBox(height: 20),
             TextFormField(
               controller: _allergiesController,
-              decoration: const InputDecoration(
-                labelText: 'Allergies',
-                hintText: 'nuts, seafood...',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.allergiesLabel,
+                hintText: l10n.allergiesHint,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 1,
             ),
 
             const SizedBox(height: 20),
             Text(
-              'Meals per day: $_mealsPerDay',
+              l10n.mealsPerDay(_mealsPerDay),
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Slider(
@@ -281,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
             FilledButton.icon(
               onPressed: _generatePlan,
               icon: const Icon(Icons.auto_awesome),
-              label: const Text('Generate Meal Plan'),
+              label: Text(l10n.generateMealPlan),
               style: FilledButton.styleFrom(
                 minimumSize: const Size(double.infinity, 52),
               ),

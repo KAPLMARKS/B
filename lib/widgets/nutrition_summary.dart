@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/meal_plan.dart';
 
 class NutritionSummary extends StatelessWidget {
@@ -8,6 +9,7 @@ class NutritionSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       color: Theme.of(context).colorScheme.primaryContainer,
@@ -16,7 +18,7 @@ class NutritionSummary extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Daily Total',
+              l10n.dailyTotal,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -26,27 +28,27 @@ class NutritionSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _NutrientColumn(
-                  label: 'Calories',
+                  label: l10n.caloriesLabel,
                   value: '${nutrition.calories.round()}',
-                  unit: 'kcal',
+                  unit: l10n.kcalUnit,
                   color: Colors.green[700]!,
                 ),
                 _NutrientColumn(
-                  label: 'Protein',
+                  label: l10n.proteinLabel,
                   value: '${nutrition.protein.round()}',
-                  unit: 'g',
+                  unit: l10n.gramUnit,
                   color: Colors.red[400]!,
                 ),
                 _NutrientColumn(
-                  label: 'Fat',
+                  label: l10n.fatLabel,
                   value: '${nutrition.fat.round()}',
-                  unit: 'g',
+                  unit: l10n.gramUnit,
                   color: Colors.orange[400]!,
                 ),
                 _NutrientColumn(
-                  label: 'Carbs',
+                  label: l10n.carbsLabel,
                   value: '${nutrition.carbs.round()}',
-                  unit: 'g',
+                  unit: l10n.gramUnit,
                   color: Colors.blue[400]!,
                 ),
               ],

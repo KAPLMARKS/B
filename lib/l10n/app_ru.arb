@@ -1,0 +1,108 @@
+{
+  "@@locale": "ru",
+
+  "appTitle": "AI Планировщик питания",
+
+  "navPlanner": "Планировщик",
+  "navHistory": "История",
+
+  "goalSectionTitle": "Цель",
+  "goalWeightLoss": "Похудение",
+  "goalMuscle": "Мышцы",
+  "goalMuscleGain": "Набор массы",
+  "goalHealth": "Здоровье",
+
+  "genderSectionTitle": "Пол",
+  "genderMale": "Мужской",
+  "genderFemale": "Женский",
+
+  "ageLabel": "Возраст",
+  "ageSuffix": "лет",
+  "weightLabel": "Вес",
+  "weightSuffix": "кг",
+  "heightLabel": "Рост",
+  "heightSuffix": "см",
+  "invalidField": "Некорректно",
+
+  "activityLevelTitle": "Уровень активности",
+  "activitySedentary": "Сидячий (мало/без упражнений)",
+  "activityLight": "Лёгкая активность (1-3 дня/нед.)",
+  "activityModerate": "Умеренная (3-5 дней/нед.)",
+  "activityActive": "Активный (6-7 дней/нед.)",
+  "activityVeryActive": "Очень активный (ежедневно)",
+
+  "dietaryRestrictionsTitle": "Диетические ограничения",
+  "dietVegetarian": "Вегетарианство",
+  "dietVegan": "Веганство",
+  "dietGlutenFree": "Без глютена",
+  "dietLactoseFree": "Без лактозы",
+  "dietKeto": "Кето",
+  "dietHalal": "Халяль",
+
+  "allergiesLabel": "Аллергии",
+  "allergiesHint": "орехи, морепродукты...",
+
+  "mealsPerDay": "Приёмов пищи в день: {count}",
+
+  "generateMealPlan": "Сгенерировать план питания",
+
+  "errorGeneric": "Ошибка: {message}",
+
+  "generating": "Генерация...",
+  "regeneratingPlan": "Перегенерация плана...",
+  "planSaved": "План сохранён",
+  "noRecipesFound": "Рецепты не найдены",
+  "chooseRecipe": "Выберите рецепт",
+  "cancel": "Отмена",
+
+  "minutesShort": "{minutes} мин",
+
+  "failedToLoadRecipe": "Не удалось загрузить рецепт: {error}",
+
+  "goalWithValue": "Цель: {goal}",
+
+  "savePlanTooltip": "Сохранить план",
+  "regenerateTooltip": "Перегенерировать",
+  "newPlan": "Новый план",
+  "saved": "Сохранено",
+  "save": "Сохранить",
+
+  "savedPlans": "Сохранённые планы",
+  "noSavedPlansYet": "Нет сохранённых планов",
+  "createPlanHint": "Создайте план на главном экране",
+  "deletePlanTitle": "Удалить план?",
+
+  "deletePlanConfirm": "Удалить \"{name}\"?",
+
+  "delete": "Удалить",
+
+  "mealsCount": "{count} приёмов пищи",
+
+  "ingredients": "Ингредиенты",
+  "instructions": "Инструкции",
+
+  "servingsCount": "{count} порций",
+
+  "mealBreakfast": "Завтрак",
+  "mealLunch": "Обед",
+  "mealDinner": "Ужин",
+  "mealSnack": "Перекус",
+  "mealSecondBreakfast": "Второй завтрак",
+
+  "kcalUnit": "ккал",
+  "gramUnit": "г",
+  "findRecipe": "Найти рецепт",
+
+  "nutrientProteinShort": "Б",
+  "nutrientFatShort": "Ж",
+  "nutrientCarbsShort": "У",
+
+  "dailyTotal": "Итого за день",
+  "caloriesLabel": "Калории",
+  "proteinLabel": "Белки",
+  "fatLabel": "Жиры",
+  "carbsLabel": "Углеводы",
+
+  "aiGenerating": "ИИ генерирует план питания...",
+  "mayTakeFewSeconds": "Это может занять несколько секунд"
+}
