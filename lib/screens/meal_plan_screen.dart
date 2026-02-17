@@ -58,7 +58,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ошибка: $e'), backgroundColor: Colors.red),
+        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
       );
     } finally {
       if (mounted) setState(() => _isRegenerating = false);
@@ -71,7 +71,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
       setState(() => _isSaved = true);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('План сохранён'),
+          content: Text('Plan saved'),
           backgroundColor: Colors.green,
         ),
       );
@@ -84,7 +84,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Введите API-ключ Spoonacular в настройках'),
+          content: Text('Spoonacular API key is not configured'),
           backgroundColor: Colors.orange,
         ),
       );
@@ -103,20 +103,19 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
       final recipes = await service.searchRecipes(meal.searchName, number: 5);
 
       if (!mounted) return;
-      Navigator.pop(context); // close loading dialog
+      Navigator.pop(context);
 
       if (recipes.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Рецепты не найдены')),
+          const SnackBar(content: Text('No recipes found')),
         );
         return;
       }
 
-      // Show recipe selection dialog
       final selected = await showDialog<SpoonacularRecipe>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Выберите рецепт'),
+          title: const Text('Choose a recipe'),
           content: SizedBox(
             width: double.maxFinite,
             child: ListView.builder(
@@ -140,7 +139,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                       : const Icon(Icons.restaurant, size: 56),
                   title: Text(recipe.title),
                   subtitle: recipe.readyInMinutes != null
-                      ? Text('${recipe.readyInMinutes} мин')
+                      ? Text('${recipe.readyInMinutes} min')
                       : null,
                   onTap: () => Navigator.pop(ctx, recipe),
                 );
@@ -150,14 +149,13 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Отмена'),
+              child: const Text('Cancel'),
             ),
           ],
         ),
       );
 
       if (selected != null && mounted) {
-        // Get full recipe details
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -167,7 +165,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
         try {
           final detailedRecipe = await service.getRecipeDetails(selected.id);
           if (!mounted) return;
-          Navigator.pop(context); // close loading
+          Navigator.pop(context);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -176,10 +174,10 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
           );
         } catch (e) {
           if (!mounted) return;
-          Navigator.pop(context); // close loading
+          Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Ошибка загрузки рецепта: $e'),
+              content: Text('Failed to load recipe: $e'),
               backgroundColor: Colors.red,
             ),
           );
@@ -187,15 +185,15 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
       }
     } on SpoonacularException catch (e) {
       if (!mounted) return;
-      Navigator.pop(context); // close loading dialog
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.message), backgroundColor: Colors.red),
       );
     } catch (e) {
       if (!mounted) return;
-      Navigator.pop(context); // close loading dialog
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ошибка: $e'), backgroundColor: Colors.red),
+        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
       );
     }
   }
@@ -204,8 +202,8 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
   Widget build(BuildContext context) {
     if (_isRegenerating) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Генерация...')),
-        body: const LoadingIndicator(message: 'Перегенерация плана...'),
+        appBar: AppBar(title: const Text('Generating...')),
+        body: const LoadingIndicator(message: 'Regenerating plan...'),
       );
     }
 
@@ -216,12 +214,12 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
           IconButton(
             icon: Icon(_isSaved ? Icons.bookmark : Icons.bookmark_border),
             onPressed: _savePlan,
-            tooltip: 'Сохранить план',
+            tooltip: 'Save plan',
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _regeneratePlan,
-            tooltip: 'Перегенерировать',
+            tooltip: 'Regenerate',
           ),
         ],
       ),
@@ -230,7 +228,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Text(
-              'Цель: ${widget.userProfile.goalDisplayName}',
+              'Goal: ${widget.userProfile.goalDisplayName}',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.grey[600],
                   ),
@@ -253,7 +251,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                   child: OutlinedButton.icon(
                     onPressed: _regeneratePlan,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Новый план'),
+                    label: const Text('New Plan'),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -261,7 +259,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                   child: FilledButton.icon(
                     onPressed: _isSaved ? null : _savePlan,
                     icon: const Icon(Icons.save),
-                    label: Text(_isSaved ? 'Сохранено' : 'Сохранить'),
+                    label: Text(_isSaved ? 'Saved' : 'Save'),
                   ),
                 ),
               ],

@@ -52,13 +52,13 @@ class RecipeDetailScreen extends StatelessWidget {
                     if (recipe.readyInMinutes != null) ...[
                       const Icon(Icons.timer, size: 18, color: Colors.grey),
                       const SizedBox(width: 4),
-                      Text('${recipe.readyInMinutes} мин'),
+                      Text('${recipe.readyInMinutes} min'),
                       const SizedBox(width: 16),
                     ],
                     if (recipe.servings != null) ...[
                       const Icon(Icons.people, size: 18, color: Colors.grey),
                       const SizedBox(width: 4),
-                      Text('${recipe.servings} порций'),
+                      Text('${recipe.servings} servings'),
                     ],
                   ],
                 ),
@@ -76,7 +76,7 @@ class RecipeDetailScreen extends StatelessWidget {
                 if (recipe.ingredients.isNotEmpty) ...[
                   const SizedBox(height: 24),
                   Text(
-                    'Ингредиенты',
+                    'Ingredients',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -98,7 +98,7 @@ class RecipeDetailScreen extends StatelessWidget {
                 if (recipe.steps.isNotEmpty) ...[
                   const SizedBox(height: 24),
                   Text(
-                    'Приготовление',
+                    'Instructions',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

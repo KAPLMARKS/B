@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Сначала введите API-ключ Groq в настройках'),
+          content: Text('Please enter your Groq API key in Settings first'),
           backgroundColor: Colors.red,
         ),
       );
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ошибка: $e'), backgroundColor: Colors.red),
+        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -138,25 +138,25 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text('Цель', style: Theme.of(context).textTheme.titleMedium),
+            Text('Goal', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             SegmentedButton<String>(
               segments: const [
-                ButtonSegment(value: 'weight_loss', label: Text('Похудение'), icon: Icon(Icons.trending_down)),
-                ButtonSegment(value: 'muscle_gain', label: Text('Масса'), icon: Icon(Icons.fitness_center)),
-                ButtonSegment(value: 'health', label: Text('Здоровье'), icon: Icon(Icons.favorite)),
+                ButtonSegment(value: 'weight_loss', label: Text('Weight Loss'), icon: Icon(Icons.trending_down)),
+                ButtonSegment(value: 'muscle_gain', label: Text('Muscle'), icon: Icon(Icons.fitness_center)),
+                ButtonSegment(value: 'health', label: Text('Health'), icon: Icon(Icons.favorite)),
               ],
               selected: {_goal},
               onSelectionChanged: (val) => setState(() => _goal = val.first),
             ),
 
             const SizedBox(height: 20),
-            Text('Пол', style: Theme.of(context).textTheme.titleMedium),
+            Text('Gender', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             SegmentedButton<String>(
               segments: const [
-                ButtonSegment(value: 'male', label: Text('Мужской'), icon: Icon(Icons.male)),
-                ButtonSegment(value: 'female', label: Text('Женский'), icon: Icon(Icons.female)),
+                ButtonSegment(value: 'male', label: Text('Male'), icon: Icon(Icons.male)),
+                ButtonSegment(value: 'female', label: Text('Female'), icon: Icon(Icons.female)),
               ],
               selected: {_gender},
               onSelectionChanged: (val) => setState(() => _gender = val.first),
@@ -170,42 +170,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   TextFormField(
                     controller: _ageController,
                     decoration: const InputDecoration(
-                      labelText: 'Возраст',
-                      suffixText: 'лет',
+                      labelText: 'Age',
+                      suffixText: 'yrs',
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
                     validator: (v) {
                       final age = int.tryParse(v ?? '');
-                      if (age == null || age < 10 || age > 120) return 'Некорректно';
+                      if (age == null || age < 10 || age > 120) return 'Invalid';
                       return null;
                     },
                   ),
                   TextFormField(
                     controller: _weightController,
                     decoration: const InputDecoration(
-                      labelText: 'Вес',
-                      suffixText: 'кг',
+                      labelText: 'Weight',
+                      suffixText: 'kg',
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
                     validator: (v) {
                       final w = double.tryParse(v ?? '');
-                      if (w == null || w < 20 || w > 300) return 'Некорректно';
+                      if (w == null || w < 20 || w > 300) return 'Invalid';
                       return null;
                     },
                   ),
                   TextFormField(
                     controller: _heightController,
                     decoration: const InputDecoration(
-                      labelText: 'Рост',
-                      suffixText: 'см',
+                      labelText: 'Height',
+                      suffixText: 'cm',
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
                     validator: (v) {
                       final h = double.tryParse(v ?? '');
-                      if (h == null || h < 100 || h > 250) return 'Некорректно';
+                      if (h == null || h < 100 || h > 250) return 'Invalid';
                       return null;
                     },
                   ),
@@ -232,34 +232,34 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             const SizedBox(height: 20),
-            Text('Уровень активности', style: Theme.of(context).textTheme.titleMedium),
+            Text('Activity Level', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
               initialValue: _activityLevel,
               decoration: const InputDecoration(border: OutlineInputBorder()),
               items: const [
-                DropdownMenuItem(value: 'sedentary', child: Text('Сидячий (мало/нет упражнений)')),
-                DropdownMenuItem(value: 'light', child: Text('Лёгкая активность (1-3 дня/нед)')),
-                DropdownMenuItem(value: 'moderate', child: Text('Умеренная (3-5 дней/нед)')),
-                DropdownMenuItem(value: 'active', child: Text('Активный (6-7 дней/нед)')),
-                DropdownMenuItem(value: 'very_active', child: Text('Очень активный (ежедневно)')),
+                DropdownMenuItem(value: 'sedentary', child: Text('Sedentary (little/no exercise)')),
+                DropdownMenuItem(value: 'light', child: Text('Light activity (1-3 days/week)')),
+                DropdownMenuItem(value: 'moderate', child: Text('Moderate (3-5 days/week)')),
+                DropdownMenuItem(value: 'active', child: Text('Active (6-7 days/week)')),
+                DropdownMenuItem(value: 'very_active', child: Text('Very active (daily)')),
               ],
               onChanged: (v) => setState(() => _activityLevel = v!),
             ),
 
             const SizedBox(height: 20),
-            Text('Диетические ограничения', style: Theme.of(context).textTheme.titleMedium),
+            Text('Dietary Restrictions', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
               runSpacing: 4,
               children: [
-                _buildRestrictionChip('vegetarian', 'Вегетарианство'),
-                _buildRestrictionChip('vegan', 'Веганство'),
-                _buildRestrictionChip('gluten_free', 'Без глютена'),
-                _buildRestrictionChip('lactose_free', 'Без лактозы'),
-                _buildRestrictionChip('keto', 'Кето'),
-                _buildRestrictionChip('halal', 'Халяль'),
+                _buildRestrictionChip('vegetarian', 'Vegetarian'),
+                _buildRestrictionChip('vegan', 'Vegan'),
+                _buildRestrictionChip('gluten_free', 'Gluten-Free'),
+                _buildRestrictionChip('lactose_free', 'Lactose-Free'),
+                _buildRestrictionChip('keto', 'Keto'),
+                _buildRestrictionChip('halal', 'Halal'),
               ],
             ),
 
@@ -267,8 +267,8 @@ class _HomeScreenState extends State<HomeScreen> {
             TextFormField(
               controller: _allergiesController,
               decoration: const InputDecoration(
-                labelText: 'Аллергии',
-                hintText: 'орехи, морепродукты...',
+                labelText: 'Allergies',
+                hintText: 'nuts, seafood...',
                 border: OutlineInputBorder(),
               ),
               maxLines: 1,
@@ -276,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 20),
             Text(
-              'Приёмов пищи в день: $_mealsPerDay',
+              'Meals per day: $_mealsPerDay',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Slider(
@@ -292,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
             FilledButton.icon(
               onPressed: _generatePlan,
               icon: const Icon(Icons.auto_awesome),
-              label: const Text('Сгенерировать план питания'),
+              label: const Text('Generate Meal Plan'),
               style: FilledButton.styleFrom(
                 minimumSize: const Size(double.infinity, 52),
               ),

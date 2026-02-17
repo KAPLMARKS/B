@@ -60,12 +60,12 @@ class _MainNavigationState extends State<MainNavigation> {
           NavigationDestination(
             icon: Icon(Icons.restaurant_menu),
             selectedIcon: Icon(Icons.restaurant_menu),
-            label: 'Планировщик',
+            label: 'Planner',
           ),
           NavigationDestination(
             icon: Icon(Icons.history),
             selectedIcon: Icon(Icons.history),
-            label: 'История',
+            label: 'History',
           ),
         ],
       ),

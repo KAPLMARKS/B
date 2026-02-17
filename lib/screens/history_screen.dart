@@ -38,16 +38,16 @@ class HistoryScreenState extends State<HistoryScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Удалить план?'),
-        content: Text('Удалить "${plan.planName}"?'),
+        title: const Text('Delete plan?'),
+        content: Text('Delete "${plan.planName}"?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Отмена'),
+            child: const Text('Cancel'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Удалить'),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -59,13 +59,11 @@ class HistoryScreenState extends State<HistoryScreen> {
     }
   }
 
-  // Uses shared UserProfile.goalLabel to avoid duplicating translation logic.
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Сохранённые планы'),
+        title: const Text('Saved Plans'),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -77,14 +75,14 @@ class HistoryScreenState extends State<HistoryScreen> {
                       Icon(Icons.history, size: 64, color: Colors.grey[400]),
                       const SizedBox(height: 16),
                       Text(
-                        'Нет сохранённых планов',
+                        'No saved plans yet',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               color: Colors.grey[600],
                             ),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Создайте план на главном экране',
+                        'Create a plan on the main screen',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Colors.grey[500],
                             ),
@@ -99,7 +97,7 @@ class HistoryScreenState extends State<HistoryScreen> {
                     itemCount: _plans.length,
                     itemBuilder: (context, index) {
                       final plan = _plans[index];
-                      final dateStr = DateFormat('dd.MM.yyyy HH:mm').format(plan.createdAt);
+                      final dateStr = DateFormat('MM/dd/yyyy HH:mm').format(plan.createdAt);
                       final nutrition = plan.totalNutrition;
 
                       return Card(
@@ -117,14 +115,14 @@ class HistoryScreenState extends State<HistoryScreen> {
                               Text('$dateStr  |  ${UserProfile.goalLabel(plan.goal)}'),
                               const SizedBox(height: 4),
                               Text(
-                                '${nutrition.calories.round()} ккал  |  Б:${nutrition.protein.round()}г  Ж:${nutrition.fat.round()}г  У:${nutrition.carbs.round()}г',
+                                '${nutrition.calories.round()} kcal  |  P:${nutrition.protein.round()}g  F:${nutrition.fat.round()}g  C:${nutrition.carbs.round()}g',
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                   fontSize: 12,
                                 ),
                               ),
                               Text(
-                                '${plan.meals.length} приёмов пищи',
+                                '${plan.meals.length} meals',
                                 style: TextStyle(
                                   color: Colors.grey[500],
                                   fontSize: 12,

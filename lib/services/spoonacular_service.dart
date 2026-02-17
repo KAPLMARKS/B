@@ -140,19 +140,19 @@ class SpoonacularService {
       } else if (response.statusCode == 401) {
         AppLogger.error('Invalid API key (401)', source: 'Spoonacular');
         throw SpoonacularException(
-          'Неверный API-ключ Spoonacular. Проверьте настройки.',
+          'Invalid Spoonacular API key. Please check settings.',
           statusCode: 401,
         );
       } else if (response.statusCode == 402) {
         AppLogger.warning('Daily quota exhausted (402)', source: 'Spoonacular');
         throw SpoonacularException(
-          'Исчерпан дневной лимит Spoonacular API.',
+          'Spoonacular daily quota exhausted.',
           statusCode: 402,
         );
       } else {
         AppLogger.error('API error: ${response.statusCode}', source: 'Spoonacular');
         throw SpoonacularException(
-          'Ошибка Spoonacular API: ${response.statusCode}',
+          'Spoonacular API error: ${response.statusCode}',
           statusCode: response.statusCode,
         );
       }
@@ -161,9 +161,9 @@ class SpoonacularService {
     } catch (e) {
       AppLogger.error('Connection error: $e', source: 'Spoonacular');
       if (e.toString().contains('TimeoutException')) {
-        throw SpoonacularException('Таймаут запроса к Spoonacular.');
+        throw SpoonacularException('Spoonacular request timeout.');
       }
-      throw SpoonacularException('Ошибка соединения: ${e.toString()}');
+      throw SpoonacularException('Connection error: ${e.toString()}');
     }
   }
 
@@ -183,17 +183,17 @@ class SpoonacularService {
         return SpoonacularRecipe.fromDetailJson(json);
       } else if (response.statusCode == 401) {
         throw SpoonacularException(
-          'Неверный API-ключ Spoonacular.',
+          'Invalid Spoonacular API key.',
           statusCode: 401,
         );
       } else if (response.statusCode == 402) {
         throw SpoonacularException(
-          'Исчерпан дневной лимит Spoonacular API.',
+          'Spoonacular daily quota exhausted.',
           statusCode: 402,
         );
       } else {
         throw SpoonacularException(
-          'Ошибка получения рецепта: ${response.statusCode}',
+          'Failed to fetch recipe: ${response.statusCode}',
           statusCode: response.statusCode,
         );
       }
@@ -201,9 +201,9 @@ class SpoonacularService {
       rethrow;
     } catch (e) {
       if (e.toString().contains('TimeoutException')) {
-        throw SpoonacularException('Таймаут запроса к Spoonacular.');
+        throw SpoonacularException('Spoonacular request timeout.');
       }
-      throw SpoonacularException('Ошибка соединения: ${e.toString()}');
+      throw SpoonacularException('Connection error: ${e.toString()}');
     }
   }
 

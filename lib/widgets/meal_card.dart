@@ -14,15 +14,15 @@ class MealCard extends StatelessWidget {
   String _getMealTypeLabel(String type) {
     switch (type.toLowerCase()) {
       case 'breakfast':
-        return 'Завтрак';
+        return 'Breakfast';
       case 'lunch':
-        return 'Обед';
+        return 'Lunch';
       case 'dinner':
-        return 'Ужин';
+        return 'Dinner';
       case 'snack':
-        return 'Перекус';
+        return 'Snack';
       case 'second_breakfast':
-        return 'Второй завтрак';
+        return 'Second Breakfast';
       default:
         return type;
     }
@@ -65,7 +65,7 @@ class MealCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '${meal.calories.round()} ккал',
+                  '${meal.calories.round()} kcal',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -91,11 +91,11 @@ class MealCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                _NutrientChip(label: 'Б', value: meal.protein, color: Colors.red[400]!),
+                _NutrientChip(label: 'P', value: meal.protein, color: Colors.red[400]!),
                 const SizedBox(width: 8),
-                _NutrientChip(label: 'Ж', value: meal.fat, color: Colors.orange[400]!),
+                _NutrientChip(label: 'F', value: meal.fat, color: Colors.orange[400]!),
                 const SizedBox(width: 8),
-                _NutrientChip(label: 'У', value: meal.carbs, color: Colors.blue[400]!),
+                _NutrientChip(label: 'C', value: meal.carbs, color: Colors.blue[400]!),
               ],
             ),
             if (meal.ingredients.isNotEmpty) ...[
@@ -120,7 +120,7 @@ class MealCard extends StatelessWidget {
                 child: TextButton.icon(
                   onPressed: onFindRecipe,
                   icon: const Icon(Icons.search, size: 18),
-                  label: const Text('Найти рецепт'),
+                  label: const Text('Find Recipe'),
                 ),
               ),
             ],
@@ -151,7 +151,7 @@ class _NutrientChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        '$label: ${value.round()}г',
+        '$label: ${value.round()}g',
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,

@@ -5,7 +5,7 @@ class LoadingIndicator extends StatelessWidget {
 
   const LoadingIndicator({
     super.key,
-    this.message = 'AI генерирует план питания...',
+    this.message = 'AI is generating your meal plan...',
   });
 
   @override
@@ -27,7 +27,7 @@ class LoadingIndicator extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Это может занять несколько секунд',
+            'This may take a few seconds',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Colors.grey[600],
                 ),

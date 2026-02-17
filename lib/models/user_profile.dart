@@ -55,11 +55,11 @@ class UserProfile {
   static String goalLabel(String goal) {
     switch (goal) {
       case 'weight_loss':
-        return 'Похудение';
+        return 'Weight Loss';
       case 'muscle_gain':
-        return 'Набор массы';
+        return 'Muscle Gain';
       case 'health':
-        return 'Здоровье';
+        return 'Health';
       default:
         return goal;
     }
@@ -68,15 +68,15 @@ class UserProfile {
   String get activityDisplayName {
     switch (activityLevel) {
       case 'sedentary':
-        return 'Сидячий';
+        return 'Sedentary';
       case 'light':
-        return 'Лёгкая активность';
+        return 'Light Activity';
       case 'moderate':
-        return 'Умеренная';
+        return 'Moderate';
       case 'active':
-        return 'Активный';
+        return 'Active';
       case 'very_active':
-        return 'Очень активный';
+        return 'Very Active';
       default:
         return activityLevel;
     }

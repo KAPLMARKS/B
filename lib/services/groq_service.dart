@@ -77,8 +77,7 @@ Rules:
 - Calories should match the user's goal
 - All nutritional values must be realistic
 - Include 3-8 ingredients per meal
-- "name" and "description" and "ingredients" should be in Russian
-- "search_name" MUST be in English (used for recipe API search)
+- All text fields (name, description, ingredients, search_name) should be in English
 - Return ONLY the JSON, no other text''';
   }
 
@@ -138,13 +137,13 @@ Rules:
             continue;
           }
           throw GroqException(
-            'Превышен лимит запросов. Попробуйте позже.',
+            'Rate limit exceeded. Please try again later.',
             statusCode: 429,
           );
         } else if (response.statusCode == 401) {
           AppLogger.error('Invalid API key (401)', source: 'Groq');
           throw GroqException(
-            'Неверный API-ключ Groq. Проверьте настройки.',
+            'Invalid Groq API key. Please check settings.',
             statusCode: 401,
           );
         } else {
@@ -152,7 +151,7 @@ Rules:
           final errorMsg = body['error']?['message'] ?? 'Unknown error';
           AppLogger.error('API error ${response.statusCode}: $errorMsg', source: 'Groq');
           throw GroqException(
-            'Ошибка Groq API: $errorMsg',
+            'Groq API error: $errorMsg',
             statusCode: response.statusCode,
           );
         }
@@ -165,13 +164,13 @@ Rules:
           continue;
         }
         if (e.toString().contains('TimeoutException')) {
-          throw GroqException('Таймаут запроса. Проверьте интернет-соединение.');
+          throw GroqException('Request timeout. Check your internet connection.');
         }
-        throw GroqException('Ошибка соединения: ${e.toString()}');
+        throw GroqException('Connection error: ${e.toString()}');
       }
     }
 
-    throw GroqException('Не удалось получить ответ после $_maxRetries попыток.');
+    throw GroqException('Failed to get response after $_maxRetries retries.');
   }
 
   MealPlan _parseResponse(String responseBody, String goal) {
@@ -180,7 +179,7 @@ Rules:
       final content = json['choices']?[0]?['message']?['content'] as String?;
 
       if (content == null || content.isEmpty) {
-        throw GroqException('Пустой ответ от AI.');
+        throw GroqException('Empty response from AI.');
       }
 
       String cleanContent = content.trim();
@@ -200,7 +199,7 @@ Rules:
     } catch (e) {
       if (e is GroqException) rethrow;
       AppLogger.error('Failed to parse AI response', source: 'Groq', error: e);
-      throw GroqException('Ошибка парсинга ответа AI: ${e.toString()}');
+      throw GroqException('Failed to parse AI response: ${e.toString()}');
     }
   }
 

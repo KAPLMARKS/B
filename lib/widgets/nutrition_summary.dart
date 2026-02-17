@@ -16,7 +16,7 @@ class NutritionSummary extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Итого за день',
+              'Daily Total',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -26,27 +26,27 @@ class NutritionSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _NutrientColumn(
-                  label: 'Калории',
+                  label: 'Calories',
                   value: '${nutrition.calories.round()}',
-                  unit: 'ккал',
+                  unit: 'kcal',
                   color: Colors.green[700]!,
                 ),
                 _NutrientColumn(
-                  label: 'Белки',
+                  label: 'Protein',
                   value: '${nutrition.protein.round()}',
-                  unit: 'г',
+                  unit: 'g',
                   color: Colors.red[400]!,
                 ),
                 _NutrientColumn(
-                  label: 'Жиры',
+                  label: 'Fat',
                   value: '${nutrition.fat.round()}',
-                  unit: 'г',
+                  unit: 'g',
                   color: Colors.orange[400]!,
                 ),
                 _NutrientColumn(
-                  label: 'Углеводы',
+                  label: 'Carbs',
                   value: '${nutrition.carbs.round()}',
-                  unit: 'г',
+                  unit: 'g',
                   color: Colors.blue[400]!,
                 ),
               ],
