@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../models/meal_plan.dart';
 import '../models/user_profile.dart';
+import '../services/analytics_service.dart';
 import '../services/groq_service.dart';
 import '../services/spoonacular_service.dart';
 import '../services/storage_service.dart';
+import '../widgets/ad_banner.dart';
 import '../widgets/meal_card.dart';
 import '../widgets/nutrition_summary.dart';
 import '../widgets/loading_indicator.dart';
@@ -25,6 +27,7 @@ class MealPlanScreen extends StatefulWidget {
 
 class _MealPlanScreenState extends State<MealPlanScreen> {
   final _storageService = StorageService();
+  final _analytics = AnalyticsService();
   late MealPlan _currentPlan;
   bool _isRegenerating = false;
   bool _isSaved = false;
@@ -66,6 +69,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
 
   Future<void> _savePlan() async {
     await _storageService.saveMealPlan(_currentPlan);
+    _analytics.logSavePlan(planName: _currentPlan.planName);
     if (mounted) {
       setState(() => _isSaved = true);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -79,6 +83,8 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
 
   Future<void> _findRecipe(Meal meal) async {
     final spoonacularKey = await _storageService.getSpoonacularApiKey();
+
+    _analytics.logFindRecipe(mealName: meal.name);
 
     if (!mounted) return;
     showDialog(
@@ -254,6 +260,8 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
               ],
             ),
           ),
+          const SizedBox(height: 12),
+          const AdBanner(),
           const SizedBox(height: 24),
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/user_profile.dart';
+import '../services/analytics_service.dart';
 import '../services/groq_service.dart';
 import '../services/storage_service.dart';
 import '../widgets/loading_indicator.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
   final _storageService = StorageService();
+  final _analytics = AnalyticsService();
 
   String _goal = 'health';
   String _gender = 'male';
@@ -78,6 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final groqService = GroqService(apiKey: groqKey!);
       final plan = await groqService.generateMealPlan(profile);
+
+      _analytics.logGeneratePlan(goal: profile.goal, mealsPerDay: profile.mealsPerDay);
 
       if (!mounted) return;
       Navigator.push(

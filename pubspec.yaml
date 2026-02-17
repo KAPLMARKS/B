@@ -12,6 +12,11 @@ dependencies:
   http: ^1.2.2
   shared_preferences: ^2.3.4
   intl: ^0.20.2
+  firebase_core: ^4.4.0
+  firebase_analytics: ^12.1.2
+  appmetrica_plugin: ^3.4.0
+  appsflyer_sdk: ^6.17.8
+  google_mobile_ads: ^7.0.0
 
 dev_dependencies:
   flutter_test:
