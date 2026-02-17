@@ -100,7 +100,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
 
     try {
       final service = SpoonacularService(apiKey: spoonacularKey);
-      final recipes = await service.searchRecipes(meal.name, number: 5);
+      final recipes = await service.searchRecipes(meal.searchName, number: 5);
 
       if (!mounted) return;
       Navigator.pop(context); // close loading dialog
